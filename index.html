@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+         <title>Color Gradient Generator</title>
+         <!-- <link rel="stylesheet" href="colorgrad.css"/> -->
+          <style>
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                justify-content: center;
+                align-items: center;
+                background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+                font-family: Arial, sans-serif;
+            }
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                flex: 1;
+                width: 100%;
+            }
+            section {
+                gap: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.8);
+                padding: 0.5rem;
+                border-radius: 5px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+            #btn1, #btn2,#btntop,#btnbottom,#btnleft,#btnright {
+                background-image: linear-gradient(to right, #1ccbd4, #c033d7);
+                color: rgb(34, 34, 34);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border: none;
+                border-radius: 8px;
+                font-size: large;
+                padding: 1rem 2rem;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            #btntop, #btnbottom, #btnleft, #btnright{
+                background-image: linear-gradient(to top, #dc6af6, #3141f7);
+            }
+            #btn1:hover, #btn2:hover, #btntop:hover, #btnbottom:hover, #btnleft:hover, #btnright:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+            .copyCode {
+                color: rgb(34, 34, 34);
+                font-size: larger;
+                font-family: 'Times New Roman', Times, serif;
+                margin: 1rem 0;
+                padding: 0.5rem;
+                background: rgb(245, 245, 245);
+                border: 1px solid rgb(200, 200, 200);
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .copyCode:hover {
+                background: rgb(235, 235, 235);
+            }
+            .decor-text h2 {
+                margin: 0;
+                padding: 0;
+                font-size: 2rem;
+                color: rgb(34, 34, 34);
+            }
+            footer {
+                background-color: black;
+                color: white;
+                padding: 0px;
+                text-align: center;
+                border-top: 1px solid #e1e1e1;
+                width: 100%;
+            }
+            footer a {
+                color: #0073e6;
+                text-decoration: none;
+            }
+            footer a:hover {
+                text-decoration: underline;
+            } 
+          </style>
+    </head>
+
+    <body>
+        <main>
+        <section>
+            <div class="decor-text">
+                <h2>Color Gradient Generator</h2>
+            </div>
+            <div class="decor-text">
+                <h3>Select the Gradient Direction</h3>
+            </div>
+            <div>
+                <button id="btntop">TOP-GRAD</button>
+                <button id="btnbottom">BTM-GRAD</button>
+                <button id="btnleft">LFT-GRAD</button>
+                <button id="btnright">RGT-GRAD</button>
+            </div>
+            <div class="decor-text">
+                <h3>Click to Change the Colors</h3>
+            </div>
+            <div>
+                <button id="btn1">#051937</button>
+                <button id="btn2">#008793</button>
+            </div>
+            <h2>Copy your code from here</h2>
+            <div class="copyCode">
+                background-image: linear-gradient(to right,rgb(92,145,229),rgb(152,63,198))
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Crafted with 💖 by <a href="https://www.linkedin.com/in/raj-maurya-271b32237?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">@rajm012</a></p>
+        <p>&copy; 2024 ColGrad. All rights reserved.</p>
+    </footer>
+    
+        <script>
+            let btn1 = document.getElementById("btn1");
+            let btn2 = document.getElementById("btn2");
+            let btntop = document.getElementById("btntop");
+            let btnbottom = document.getElementById("btnbottom");
+            let btnleft = document.getElementById("btnleft");
+            let btnright = document.getElementById("btnright");
+            let rgb1 = "#004773";
+            let rgb2 = "#54d542";
+            let direction = "to right";
+            let copyDiv = document.querySelector(".copyCode");
+
+            // hex code generator
+            const hexGen = () => {
+                let hexvals="0123456789abcdef";
+                let colors = "#";
+                for (let i=0;i<6;i++){
+                    colors += hexvals[Math.floor(Math.random()*16)];
+                }
+                return colors;
+            }; 
+
+
+            const updateGradient = () => {
+                document.body.style.backgroundImage = `linear-gradient(${direction}, ${rgb1}, ${rgb2})`;
+                copyDiv.innerHTML = `background-image: linear-gradient(${direction}, ${rgb1}, ${rgb2})`;
+                navigator.clipboard.writeText(copyDiv.innerText).then(() => {
+                    copyDiv.style.backgroundColor = "rgb(200, 255, 200)";
+                    setTimeout(() => {
+                        copyDiv.style.backgroundColor = "rgb(245, 245, 245)";
+                    }, 1000);
+                });
+            };
+
+            const handleBtn1 = () => {
+                rgb1 = hexGen();
+                btn1.innerHTML = rgb1;
+                updateGradient();
+            };
+
+            const handleBtn2 = () => {
+                rgb2 = hexGen();
+                btn2.innerHTML = rgb2;
+                updateGradient();
+            };
+            const handleDirection = (newDirection) => {
+                direction = newDirection;
+                updateGradient();
+            };
+
+            btn1.addEventListener("click",handleBtn1);
+            btn2.addEventListener("click",handleBtn2);
+            btntop.addEventListener("click", () => handleDirection("to top"));
+            btnbottom.addEventListener("click", () => handleDirection("to bottom"));
+            btnleft.addEventListener("click", () => handleDirection("to left"));
+            btnright.addEventListener("click", () => handleDirection("to right"));
+
+            copyDiv.addEventListener("click", () => {
+                navigator.clipboard.writeText(copyDiv.innerText).then(() => {
+                    copyDiv.style.backgroundColor = "rgb(200, 255, 200)";
+                    alert(copyDiv.innerText +"\nCopied to clipboard");
+                    setTimeout(() => {
+                        copyDiv.style.backgroundColor = "rgb(245, 245, 245)";
+                    }, 1000);
+                });
+            });
+        </script>
+    </body>
+</html>
